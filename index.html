@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <body>
+    <div id="root"></div>
+  </body>
+
+  <script src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <script type="text/babel">
+    function MinutestoHours() {
+      const [amount, setAmount] = React.useState("");
+      const [flipped, setFlipped] = React.useState(false);
+      const onChange = (event) => {
+        setAmount(event.target.value);
+      };
+      const reset = () => setAmount(0);
+      const onFlip = () => {
+        reset();
+        setFlipped(!flipped);
+      };
+      return (
+        <div>
+          <h1 className="hi">Minutes to Hours Converter</h1>
+          <label htmlFor="minutes">Minutes : </label>
+
+          <div>
+            <input
+              value={flipped ? Math.round(amount * 60) : amount} //여기에서의 이 value가 useState()에 있는 초기값 minutes를 가리키고 있나봐.
+              // 그래서 hours에도 똑같이 valus를 쓰면 오류가 나는 듯함.
+              id="amount"
+              placeholder="Minutes"
+              type="nunmber"
+              onChange={onChange}
+              disabled={flipped}
+            />
+          </div>
+          <h4> You want to convert {amount} </h4>
+          <div>
+            <label htmlFor="hours">Hours : </label>
+            <input
+              value={flipped ? amount : Math.round(amount / 60)}
+              id="hours"
+              placeholder="Hours"
+              type="nunmber"
+              disabled={!flipped}
+              onChange={onChange}
+            />
+          </div>
+          <button onClick={reset}>reset</button>
+          <button onClick={onFlip}>{flipped ? "Turn back" : "Flip"} </button>
+        </div>
+      );
+    }
+
+    function KmToMiles() {
+      return <h3>Km to Miles</h3>;
+    }
+
+    function App() {
+      const [index, setIndex] = React.useState("xx");
+      const onSelect = (event) => {
+        setIndex(event.target.value);
+      };
+      console.log("render w/", index);
+      return (
+        <div>
+          <h1>Super Converter</h1>
+          <select value={index} onChange={onSelect}>
+            <option value="xx">Select Converter</option>
+            <option value="0">Minutes & Hours</option>
+            <option value="1">Km & Miles</option>
+          </select>
+          <hr />
+          {index === "xx" ? "Please select converter" : null}
+          {index === "0" ? <MinutestoHours /> : null}
+          {index === "1" ? <KmToMiles /> : null}
+        </div>
+      );
+    }
+    const root = document.getElementById("root");
+    ReactDOM.render(<App />, root);
+  </script>
+</html>
+
+<!-- // const Button = () => (
+  //   <button
+  //     style={{
+  //       backgroundColor: "tomato",
+  //     }}
+  //     onClick={() => console.log("i am clicked")}
+  //   >
+  //     Click me
+  //   </button>
+  // );
+  // const h3 = React.createElement(
+  //   "h3",
+  //   {
+  //     id: "sexy-span",
+  //     style: { color: "red" },
+  //     onMouseEnter: () => console.log("mouse enter"),
+  //   },
+  //   "Hello span"
+  // );
+  // const btn = React.createElement(
+  //   "button",
+  //   { onClick: () => console.log("i am clicked") },
+  //   "Click me"
+  // );
+
+  // function App() {
+  //   const [counter, setCounter] = React.useState(1);
+  //   const onClick = () => {
+  //     setCounter(counter + 1);
+  //     setCounter((current) => current + 1);
+  //   };
+
+  //   return (
+  //     <div>
+  //       <h3>Total clicks : {counter}</h3>
+  //       <button onClick={onClick}>Click me</button>
+  //     </div>
+  //   );
+  // }
+
+  // function App() {
+  //   let [counter, setCounter] = React.useState(0);
+  //   const onClick = () => {
+  //     counter = counter + 1;
+  //     setCounter(counter);
+  //   };
+
+  //   return (
+  //     <div>
+  //       <h3>Total clicks : {counter}</h3>
+  //       <button onClick={onClick}>Click me</button>
+  //     </div>
+  //   );
+  // } -->
